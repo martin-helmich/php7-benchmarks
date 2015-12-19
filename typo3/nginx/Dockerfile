@@ -11,4 +11,4 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 EXPOSE 80
 
-CMD "chown www-data. /var/run/php/php-fpm.sock && nginx"
+CMD ["/bin/sh", "-c", "chown www-data. /var/run/php/php-fpm.sock && nginx"]
