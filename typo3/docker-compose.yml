@@ -10,18 +10,27 @@ php5fpm:
     - typo3:/var/www
   links:
     - mysql:mysql
+hhvm:
+  build: hhvm
+  volumes:
+    - typo3:/var/www
+  links:
+    - mysql:mysql
 php7nginx:
   build: nginx
-  volumes_from:
-    - php7fpm
-  volumes:
-    - typo3:/var/www
+  volumes_from: [php7fpm]
+  volumes: ["typo3:/var/www"]
+  ports: ["8000:80"]
 php5nginx:
   build: nginx
-  volumes_from:
-    - php5fpm
-  volumes:
-    - typo3:/var/www
+  volumes_from: [php5fpm]
+  volumes: ["typo3:/var/www"]
+  ports: ["8001:80"]
+hhvmnginx:
+  build: nginx
+  volumes_from: [hhvm]
+  volumes: ["typo3:/var/www"]
+  ports: ["8002:80"]
 mysql:
   image: mariadb
   environment:
