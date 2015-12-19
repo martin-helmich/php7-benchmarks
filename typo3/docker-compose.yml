@@ -1,0 +1,31 @@
+php7fpm:
+  build: php7
+  volumes:
+    - typo3:/var/www
+  links:
+    - mysql:mysql
+php5fpm:
+  build: php5
+  volumes:
+    - typo3:/var/www
+  links:
+    - mysql:mysql
+php7nginx:
+  build: nginx
+  volumes_from:
+    - php7fpm
+  volumes:
+    - typo3:/var/www
+php5nginx:
+  build: nginx
+  volumes_from:
+    - php5fpm
+  volumes:
+    - typo3:/var/www
+mysql:
+  image: mariadb
+  environment:
+    MYSQL_USER: typo3
+    MYSQL_PASSWORD: typo3
+    MYSQL_DATABASE: typo3
+    MYSQL_ROOT_PASSWORD: typo3
