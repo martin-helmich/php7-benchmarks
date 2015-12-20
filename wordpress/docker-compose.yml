@@ -1,0 +1,40 @@
+php7fpm:
+  build: ../typo3/php7
+  volumes:
+    - wordpress:/var/www
+  links:
+    - mysql:mysql
+php5fpm:
+  build: ../typo3/php5
+  volumes:
+    - wordpress:/var/www
+  links:
+    - mysql:mysql
+hhvm:
+  build: ../typo3/hhvm
+  volumes:
+    - wordpress:/var/www
+  links:
+    - mysql:mysql
+php7nginx:
+  build: ../typo3/nginx
+  volumes_from: [php7fpm]
+  volumes: ["wordpress:/var/www"]
+  ports: ["8000:80"]
+php5nginx:
+  build: ../typo3/nginx
+  volumes_from: [php5fpm]
+  volumes: ["wordpress:/var/www"]
+  ports: ["8001:80"]
+hhvmnginx:
+  build: ../typo3/nginx
+  volumes_from: [hhvm]
+  volumes: ["wordpress:/var/www"]
+  ports: ["8002:80"]
+mysql:
+  image: mariadb
+  environment:
+    MYSQL_USER: wordpress
+    MYSQL_PASSWORD: wordpress
+    MYSQL_DATABASE: wordpress
+    MYSQL_ROOT_PASSWORD: wordpress
