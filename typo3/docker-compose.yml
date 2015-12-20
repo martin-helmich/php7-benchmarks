@@ -1,33 +1,33 @@
 php7fpm:
-  build: php7
+  build: ../docker-images/php7
   volumes:
     - typo3:/var/www
   links:
     - mysql:mysql
 php5fpm:
-  build: php5
+  build: ../docker-images/php5
   volumes:
     - typo3:/var/www
   links:
     - mysql:mysql
 hhvm:
-  build: hhvm
+  build: ../docker-images/hhvm
   volumes:
     - typo3:/var/www
   links:
     - mysql:mysql
 php7nginx:
-  build: nginx
+  build: ../docker-images/nginx
   volumes_from: [php7fpm]
   volumes: ["typo3:/var/www"]
   ports: ["8000:80"]
 php5nginx:
-  build: nginx
+  build: ../docker-images/nginx
   volumes_from: [php5fpm]
   volumes: ["typo3:/var/www"]
   ports: ["8001:80"]
 hhvmnginx:
-  build: nginx
+  build: ../docker-images/nginx
   volumes_from: [hhvm]
   volumes: ["typo3:/var/www"]
   ports: ["8002:80"]
