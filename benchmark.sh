@@ -15,12 +15,7 @@ function die() {
   exit 1
 }
 
-#docker-compose stop
-#docker-compose rm php5fpm php7fpm hhvm php5nginx php7nginx hhvmnginx
-#docker-compose up -d
-
-#sleep 5
-
+mkdir -p data
 ${COMPOSE} stop
 
 for PRODUCT in $PRODUCTS ; do
@@ -41,7 +36,7 @@ for PRODUCT in $PRODUCTS ; do
   for C in $CONCURRENCIES ; do
     DESCRIPTION="${CMS}-${PRODUCT}-c${C}"
     #docker run --rm --link ${CMS}_${PRODUCT}nginx_1:target -v ${PWD}:/work ${CMS}_siege -r 200 -c ${C} --log=/work/${CMS}.csv -m ${DESCRIPTION} http://target
-    siege -b -r 200 -c $C --log=stats-${CMS}.csv -m ${DESCRIPTION} http://${IP}/
+    siege -b -r 200 -c $C --log=data/stats-${CMS}.csv -m ${DESCRIPTION} http://${IP}/
   done
 
   ${COMPOSE} stop

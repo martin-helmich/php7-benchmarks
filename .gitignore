@@ -1,0 +1,8 @@
+# Python virtualenv
+/bin
+/include
+/lib
+/lib64
+
+# PyCharm
+/.idea
