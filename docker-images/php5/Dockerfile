@@ -14,7 +14,10 @@ RUN LC_ALL=en_US.UTF8 add-apt-repository ppa:ondrej/php5-5.6 && \
 
 RUN apt-get install -y \
     php5-fpm \
-    php5-mysql
+    php5-mysql \
+    php5-mcrypt \
+    php5-gd \
+    php5-curl
 
 VOLUME /var/run/php
 

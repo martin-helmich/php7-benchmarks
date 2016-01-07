@@ -1,0 +1,40 @@
+php7fpm:
+  build: ../docker-images/php7
+  volumes:
+    - magento:/var/www
+  links:
+    - mysql:mysql
+php5fpm:
+  build: ../docker-images/php5
+  volumes:
+    - magento:/var/www
+  links:
+    - mysql:mysql
+hhvm:
+  build: ../docker-images/hhvm
+  volumes:
+    - magento:/var/www
+  links:
+    - mysql:mysql
+php7nginx:
+  build: ../docker-images/nginx
+  volumes_from: [php7fpm]
+  volumes: ["magento:/var/www"]
+  ports: ["8000:80"]
+php5nginx:
+  build: ../docker-images/nginx
+  volumes_from: [php5fpm]
+  volumes: ["magento:/var/www"]
+  ports: ["8001:80"]
+hhvmnginx:
+  build: ../docker-images/nginx
+  volumes_from: [hhvm]
+  volumes: ["magento:/var/www"]
+  ports: ["8002:80"]
+mysql:
+  image: mariadb
+  environment:
+    MYSQL_USER: magento
+    MYSQL_PASSWORD: magento
+    MYSQL_DATABASE: magento
+    MYSQL_ROOT_PASSWORD: magento
